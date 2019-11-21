@@ -4,7 +4,7 @@
 </h1>
 
 <h3 align="center">
-  Semana OmniStack 07 🚀
+  Projeto resultado Semana OmniStack 07 🚀
  
 </h3>
 
