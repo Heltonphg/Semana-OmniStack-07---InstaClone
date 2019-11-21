@@ -4,7 +4,9 @@ const PostSchema = new mongoose.Schema({
     author: String,
     place: String,
     description: String,
+    hashtags: String,
     image: String,
+
     like: {
         type: Number,
         default: 0,
