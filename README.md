@@ -1,6 +1,6 @@
 
 <h1 align="center">
-    <img alt="GoStack" src="https://agileengine.com/wordpress/wp-content/uploads/2018/02/mern-1024x256.jpg" width="300px" />
+    <img alt="GoStack" src="https://github.com/Heltonphg/Semana-OmniStack-07---Instagran/blob/master/Stack.png" width="500px" />
 </h1>
 
 <h3 align="center">
