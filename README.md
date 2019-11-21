@@ -24,6 +24,6 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 ## 💻 Sobre o Projeto
 
-O InstaClone segue como inspiração o Instagran, nele, o usuário pode fazer posts com upload de images tudo em tempo real, ou seja
-os posts aparecerão para todos os usuários assim que o post for finalizado.
+<p>O InstaClone segue como inspiração o Instagran, nele, o usuário pode fazer posts com upload de images tudo em tempo real, ou seja
+os posts aparecerão para todos os usuários, assim que um novo post é feito por um usuário.<p>
 
