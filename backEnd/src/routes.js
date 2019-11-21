@@ -2,7 +2,7 @@ const express = require ('express')
 const router = express.Router()
 
 router.get('/', (req, res) => {
-    return res.status(200).json({message: "OK"})
+    return res.status(200).json({message: `Olá ${req.query.name}`})
 });
 
 module.exports = router;

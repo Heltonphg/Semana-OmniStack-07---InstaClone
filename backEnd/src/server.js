@@ -5,21 +5,38 @@ const bodyParser = require('body-parser');
 const routes = require('./routes');
 
 class App {
-    constructor(){
+    constructor() {
         this.express = express();
         this.middlewares();
         this.routes();
+        this.conect();
     }
 
     middlewares() {
         this.express.use(express.urlencoded({ extended: false })); // permite o envio de arquivo
         this.express.use(cors()); //permite que aplicacoes externas acessem nossa api
-        this.express.use(bodyParser.json ({limit: '5mb', extended: true}));
-        this.express.use(bodyParser.urlencoded({limit: '5mb', extended: true}));
+        this.express.use(bodyParser.json({ limit: '5mb', extended: true }));
+        this.express.use(bodyParser.urlencoded({ limit: '5mb', extended: true }));
     }
 
-    routes(){
+    routes() {
         this.express.use(routes);
+    }
+
+    conect() {
+        mongoose.connect('mongodb+srv://Heltonphg:frede1618@@@cluster0-xsq9z.mongodb.net/test?retryWrites=true&w=majority',
+            {
+                useNewUrlParser: true,
+                useUnifiedTopology: true
+            }
+        ).then(() => {
+            console.log('MongoDB está conectado')
+        }).catch(err => {
+            console.log('MongoDB connection falhou');
+            console.log(err)
+        });
+        mongoose.set('useCreateIndex', true)
+
     }
 }
 
