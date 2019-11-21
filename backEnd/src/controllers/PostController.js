@@ -14,13 +14,18 @@ class PostController {
         const { author, place, description, hashtags } = req.body;
         const { filename: image } = req.file;
 
+        //TODO: fazendo com que as imagens sejam JPG
+        const [name] = image.split('.');
+        const filename = `${name}.jpg`;
+
+
         //TODO: Redimensionando imagem -> 
         //TODO: dps que a foto foi salva pelo arquivo upload.js, o sharp redimensiona e a coloca em resized
         await sharp(req.file.path)
             .resize(500)
             .jpeg({ quelity: 70 })
             .toFile(
-                path.resolve(req.file.destination, 'resized', image)
+                path.resolve(req.file.destination, 'resized', filename)
             );
         fs.unlinkSync(req.file.path); //TODO: Apagando a imagem do caminho inicial
 
@@ -30,7 +35,7 @@ class PostController {
             place,
             description,
             hashtags,
-            image
+            filename
         })
         return res.json(post);
     }
