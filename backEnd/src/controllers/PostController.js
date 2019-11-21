@@ -36,7 +36,11 @@ class PostController {
             description,
             hashtags,
             filename
-        })
+        });
+
+        //? quando um post for criado -> enviar para os usuarios cadastrados em tempo real que tem um novo post
+        req.io.emit('post', post);
+
         return res.json(post);
     }
 }

@@ -11,7 +11,6 @@ class App {
     constructor() {
         this.express = express();
         this.middlewares();
-        this.routes();
         this.conect();
     }
 
@@ -22,11 +21,7 @@ class App {
         this.express.use(bodyParser.urlencoded({ limit: '5mb', extended: true }));
         this.express.use('/files', express.static(path.resolve(__dirname, '..', 'uploads', 'resized'))) //TODO: Criando uma pasta static
     }
-
-    routes() {
-        this.express.use(routes);
-    }
-
+    
     conect() {
         mongoose.connect(config.Connection,
             {
