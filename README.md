@@ -1,6 +1,6 @@
 
 <h1 align="center">
-    <img alt="GoStack" src="https://agileengine.com/wordpress/wp-content/uploads/2018/02/mern-1024x256.jpg" width="300px" />
+    <img alt="GoStack" src="https://github.com/Heltonphg/Semana-OmniStack-07---Instagran/blob/master/Stack.png" width="500px" />
 </h1>
 
 <h3 align="center">
@@ -19,6 +19,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 - [Node.js](https://nodejs.org/en/)
 - [Express](https://expressjs.com/pt-br/)
+- [MongoDb](https://www.mongodb.com/)
 - [React](https://reactjs.org)
 - [React Native](https://facebook.github.io/react-native/)
 
