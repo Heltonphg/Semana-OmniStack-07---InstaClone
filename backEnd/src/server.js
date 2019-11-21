@@ -4,6 +4,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const routes = require('./routes');
 const config = require('./config/general');
+const path = require('path');
 
 class App {
 
@@ -15,10 +16,11 @@ class App {
     }
 
     middlewares() {
-        this.express.use(express.urlencoded({ extended: false })); // permite o envio de arquivo
-        this.express.use(cors()); //permite que aplicacoes externas acessem nossa api
-        this.express.use(bodyParser.json({ limit: '5mb', extended: true }));
+        this.express.use(express.urlencoded({ extended: false })); //TODO:permite o envio de arquivo
+        this.express.use(cors()); //TODO: permite que aplicacoes externas acessem nossa api
+        this.express.use(bodyParser.json({ limit: '5mb', extended: true })); //TODO: limita um tamano de 5mb de dados em json, o padrao é 1mb
         this.express.use(bodyParser.urlencoded({ limit: '5mb', extended: true }));
+        this.express.use('/files', express.static(path.resolve(__dirname, '..', 'uploads', 'resized'))) //TODO: Criando uma pasta static
     }
 
     routes() {
