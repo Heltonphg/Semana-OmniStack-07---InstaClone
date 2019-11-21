@@ -1,3 +1,3 @@
 const server = require('./server');
-
-server.listen(3333, () => console.log('Rodando'));
+const config = require('./config/general');
+server.listen(config.PORT, () => console.log(`Servidor Rodando na porta: ${config.PORT}`));

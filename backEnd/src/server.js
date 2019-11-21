@@ -3,8 +3,10 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const routes = require('./routes');
+const config = require('./config/general');
 
 class App {
+
     constructor() {
         this.express = express();
         this.middlewares();
@@ -24,7 +26,7 @@ class App {
     }
 
     conect() {
-        mongoose.connect('mongodb+srv://Heltonphg:frede1618@@@cluster0-xsq9z.mongodb.net/test?retryWrites=true&w=majority',
+        mongoose.connect(config.Connection,
             {
                 useNewUrlParser: true,
                 useUnifiedTopology: true
