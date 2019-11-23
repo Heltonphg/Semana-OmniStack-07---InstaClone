@@ -1,11 +1,11 @@
-import {Dimensions} from 'react-native';
-
-const {width, height} = Dimensions.get('window');
+import { Platform } from 'react-native';
 
 export default {
-    baseMargin: 10,
-    basePadding: 20,
-    baseRadius: 3,
-    screenWidth: width < height ? width : height,
-    screenHeight: width < height ? height : width,
-}
+  margin: 10,
+  padding: 15,
+  ...Platform.select({
+    ios: { headerHeight: 64, headerPadding: 20 },
+    android: { headerHeight: 44, headerPadding: 0 },
+  }),
+  tabBarHeight: 50,
+};
