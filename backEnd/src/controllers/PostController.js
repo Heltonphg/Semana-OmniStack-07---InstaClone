@@ -35,7 +35,7 @@ class PostController {
             place,
             description,
             hashtags,
-            filename
+            image: filename 
         });
 
         //? quando um post for criado -> enviar para os usuarios cadastrados em tempo real que tem um novo post
