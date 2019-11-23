@@ -3,7 +3,7 @@ import { KeyboardAvoidingView, Platform, View, StyleSheet, Image, TouchableOpaci
 import { Input } from './styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import logo from '../../assets/logo.png';
+import logol from '../../assets/logol.png';
 import Ou from '../../assets/ou.png';
 
 import { colors } from '../../estilos';
@@ -12,6 +12,7 @@ import { colors } from '../../estilos';
 export default function Login() {
   const [email, setEmail] = useState('');
   const [passs, setPass] = useState('');
+  const [loading, setLoading] = useState('');
 
   return (
     <KeyboardAvoidingView enabled={Platform.OS === 'ios'} behavior="padding" style={styles.container}>
@@ -23,7 +24,7 @@ export default function Login() {
 
 
         <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 30 }}>
-          <Image source={logo} style={{ width: 230, height: 80, marginTop: 4 }} />
+          <Image source={logol} style={{ width: 230, height: 70, marginTop: 4, marginBottom:8 }} />
         </View>
 
         <View style={styles.form}>

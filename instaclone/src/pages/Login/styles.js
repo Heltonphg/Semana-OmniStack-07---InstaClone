@@ -13,7 +13,7 @@ background: #EEE;
 border-radius: 4px;
 border-color: transparent;
 border-width: 1px;
-border-color: rgba(255,255,255,0.3);
+border-color: #ddd;
 padding: 0 20px;
 height: 52px;
 font-size: 16px;
