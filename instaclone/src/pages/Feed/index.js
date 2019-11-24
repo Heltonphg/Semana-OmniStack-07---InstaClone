@@ -1,43 +1,68 @@
-import React, { useEffect, useState } from 'react';
-import { View, FlatList, StyleSheet} from 'react-native';
+import Header from '../components/Header'
+import React, { Component } from 'react';
+import { View, FlatList, StyleSheet } from 'react-native';
 import api from '../../services/api';
+import io from 'socket.io-client';
 import FeedItems from './FeedItems';
 
-import Header from '../components/Header'
+export default class Feed extends Component {
+  constructor(props) {
+    super(props);
 
-export default function Feed(props) {
-  const [feed, setFeed] = useState([]);
-  const [refreshing, setRefreshing] = useState(false);
-
-  async function populationFeed() {
-    setRefreshing(true)
-    const response = await api.get('posts');
-    setFeed(response.data);
-    setRefreshing(false)
+    this.state = {
+      refreshing: false,
+      feed: []
+    };
   }
 
-  useEffect(() => {
-    //registerToSocket();
-    populationFeed();
-  }, [])
+  populationFeed = async () => {
+    this.setState({refreshing: true})
+    const response = await api.get('posts');
+    this.setState({feed: response.data});
+    this.setState({refreshing: false})
+  }
 
+  componentDidMount(){
+    this.registerToSocket();
+    this.populationFeed()
+  }
 
-  return (
-    <View style={styles.container}>
-      <Header navigation={props.navigation} />
+  //TODO: Metodos que monitoram o sockt.io
+  registerToSocket = () => {
+    const socket = io('http://10.0.0.101:3333');
 
-      <FlatList
-        onRefresh={populationFeed}
-        refreshing={refreshing}
-        data={feed}
-        keyExtractor={post => String(post._id)}
-        renderItem={({ item }) => (
-          <FeedItems item={item} />
-        )}
-      />
+    socket.on('post', newPost =>{
+      this.setState({feed: [newPost, ... this.state.feed]});
+    })
 
-    </View>
-  );
+    socket.on('like', likedPost =>{
+      this.setState({
+        feed: this.state.feed.map(post => post._id === likedPost._id ? likedPost: post)
+      })
+    })
+  }
+
+  handleLike = id => {
+    api.post(`posts/${id}/like`)
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <Header navigation={this.props.navigation} />
+
+        <FlatList
+          onRefresh={()=> this.populationFeed()}
+          refreshing={this.state.refreshing}
+          data={this.state.feed}
+          keyExtractor={post => String(post._id)}
+          renderItem={({ item }) => (
+            <FeedItems item={item} handleLike = {this.handleLike} />
+          )}
+        />
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({

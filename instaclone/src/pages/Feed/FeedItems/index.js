@@ -9,7 +9,7 @@ import send from '../../../assets/send.png';
 import avatar from '../../../assets/es.jpg';
 import { colors, fonts, metrics } from '../../../estilos';
 
-export default function FeedItems({ item }) {
+export default function FeedItems({ item, handleLike }) {
     return (
 
         <View style={styles.feedItem}>
@@ -39,7 +39,7 @@ export default function FeedItems({ item }) {
                 {/* //TODO: Acoes */}
                 <View style={styles.actions}>
                     <View style ={{flexDirection: 'row'}} >
-                        <TouchableOpacity style={styles.action} onPress={() => { }}>
+                        <TouchableOpacity style={styles.action} onPress={() => handleLike(item._id)}>
                             <Image source={like} />
                         </TouchableOpacity>
 
