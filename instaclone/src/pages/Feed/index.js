@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, FlatList, Text } from 'react-native';
+import { View, FlatList, StyleSheet} from 'react-native';
 import api from '../../services/api';
 import FeedItems from './FeedItems';
 
@@ -23,7 +23,7 @@ export default function Feed(props) {
 
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#F8F8FA' }}>
+    <View style={styles.container}>
       <Header navigation={props.navigation} />
 
       <FlatList
@@ -39,3 +39,9 @@ export default function Feed(props) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  }
+})
