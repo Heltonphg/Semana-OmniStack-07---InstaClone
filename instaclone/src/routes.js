@@ -92,10 +92,13 @@ const Routes = createAppContainer(
         },
         Home: {
             screen: TabsPage
+        },
+         New: {
+            screen: New
         }
     },
         {
-            initialRouteName: 'Home',
+            initialRouteName: 'New',
         }),
 );
 
