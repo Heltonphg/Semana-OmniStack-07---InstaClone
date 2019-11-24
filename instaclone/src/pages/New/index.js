@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, TextInput, Image } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView,TextInput, Image } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
+import api from '../../services/api';
 
-// import { Container } from './styles';
+export default function New({ navigation }) {
 
-export default function New({navigation}) {
   const [author, setAuthor] = useState('')
   const [place, setPlace] = useState('')
   const [description, setDescription] = useState('')
@@ -21,7 +21,8 @@ export default function New({navigation}) {
       } else if (upload.didCancel) {
         console.log('Cancelado');
       } else {
-        //TODO: em base64
+
+        //TODO: em base64 para a preview
         const preview = {
           uri: `data: image/jpeg;base64,${upload.data}`,
         }
@@ -52,7 +53,8 @@ export default function New({navigation}) {
     })
   }
 
-  async function handleSubmit(){
+  async function handleSubmit() {
+
     //TODO: usnado o multFormData
     const data = new FormData();
 
@@ -64,67 +66,68 @@ export default function New({navigation}) {
 
     await api.post('posts', data);
 
-    navigation.navigate('Home');
+    navigation.navigate('Feed');
 
   }
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.selectButton} onPress={() => handleSelectImage()}>
-        <Text style={styles.selectButtonText}>Selecionar Imagem</Text>
-      </TouchableOpacity>
+      <ScrollView>
+        <TouchableOpacity style={styles.selectButton} onPress={() => handleSelectImage()}>
+          <Text style={styles.selectButtonText}>Selecionar Imagem</Text>
+        </TouchableOpacity>
 
-      {
-        preview && <Image style={styles.preview} source={preview} />
-      }
-
-
-      <TextInput
-        style={styles.input}
-        autoCorrect={true}
-        autoCapitalize="none"
-        placeholder="Nome do Autor"
-        placeholderTextColor="#999"
-        value={author}
-        onChangeText={author => setAuthor(author)}
-      />
-
-      <TextInput
-        style={styles.input}
-        autoCorrect={true}
-        autoCapitalize="none"
-        placeholder="Local da foto"
-        placeholderTextColor="#999"
-        value={place}
-        onChangeText={place => setPlace(place)}
-      />
-
-      <TextInput
-        style={styles.input}
-        autoCorrect={true}
-        autoCapitalize="none"
-        placeholder="Descricao"
-        placeholderTextColor="#999"
-        value={description}
-        onChangeText={desc => setDescription(desc)}
-      />
-
-      <TextInput
-        style={styles.input}
-        autoCorrect={true}
-        autoCapitalize="none"
-        placeholder="Hashtags"
-        placeholderTextColor="#999"
-        value={hashtags}
-        onChangeText={hash => setHashtags(hash)}
-      />
+        {
+          preview && <Image style={styles.preview} source={preview} />
+        }
 
 
-      <TouchableOpacity style={styles.shareButton} onPress={() => handleSubmit()}>
-        <Text style={styles.shareButtonText}>Enviar</Text>
-      </TouchableOpacity>
+        <TextInput
+          style={styles.input}
+          autoCorrect={true}
+          autoCapitalize="none"
+          placeholder="Nome do Autor"
+          placeholderTextColor="#999"
+          value={author}
+          onChangeText={author => setAuthor(author)}
+        />
+
+        <TextInput
+          style={styles.input}
+          autoCorrect={true}
+          autoCapitalize="none"
+          placeholder="Local da foto"
+          placeholderTextColor="#999"
+          value={place}
+          onChangeText={place => setPlace(place)}
+        />
+
+        <TextInput
+          style={styles.input}
+          autoCorrect={true}
+          autoCapitalize="none"
+          placeholder="Descricao"
+          placeholderTextColor="#999"
+          value={description}
+          onChangeText={desc => setDescription(desc)}
+        />
+
+        <TextInput
+          style={styles.input}
+          autoCorrect={true}
+          autoCapitalize="none"
+          placeholder="Hashtags"
+          placeholderTextColor="#999"
+          value={hashtags}
+          onChangeText={hash => setHashtags(hash)}
+        />
 
 
+        <TouchableOpacity style={styles.shareButton} onPress={() => handleSubmit()}>
+          <Text style={styles.shareButtonText}>Enviar</Text>
+        </TouchableOpacity>
+
+      </ScrollView>
     </View>
   );
 }
