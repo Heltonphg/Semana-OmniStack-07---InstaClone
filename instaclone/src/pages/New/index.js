@@ -55,7 +55,7 @@ export default function New({ navigation }) {
 
   async function handleSubmit() {
 
-    //TODO: usnado o multFormData
+    //TODO: usando o multFormData
     const data = new FormData();
 
     data.append('image', image);

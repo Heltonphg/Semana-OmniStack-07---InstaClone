@@ -29,7 +29,7 @@ export default class Feed extends Component {
 
   //TODO: Metodos que monitoram o sockt.io
   registerToSocket = () => {
-    const socket = io('http://10.0.0.101:3333');
+    const socket = io('http://10.190.37.68:3333');
 
     socket.on('post', newPost =>{
       this.setState({feed: [newPost, ... this.state.feed]});
