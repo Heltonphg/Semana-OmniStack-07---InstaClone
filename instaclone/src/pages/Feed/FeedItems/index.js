@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Modal, StatusBar, TouchableHighlight } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -8,66 +8,116 @@ import comment from '../../../assets/comment.png';
 import send from '../../../assets/send.png';
 import avatar from '../../../assets/es.jpg';
 import { colors, fonts, metrics } from '../../../estilos';
+import ImageViewer from 'react-native-image-zoom-viewer';
 
-export default function FeedItems({ item, handleLike }) {
-    return (
+export default class FeedItems extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            modalVisible: false,
+            images: [{
+                url: '',
+            }],
+        }
+        this.setModalVisible = this.setModalVisible.bind(this)
+    }
 
-        <View style={styles.feedItem}>
 
-            {/* //TODO: Header */}
-            <View style={styles.feedItemHeader}>
+    setModalVisible(visible, imagePath) {
+        this.state.images = [{
+          url: imagePath,
+        }]
+        if (visible) {
+          StatusBar.setHidden(true);
+        }
+        if (!visible) {
+          StatusBar.setHidden(false);
+        }
+        this.setState({ modalVisible: visible });
+      }
 
-                <View style={styles.userInfoAvatar}>
-                    <Image style={styles.avatar} source={avatar} />
 
-                    <View style={styles.userInfo}>
-                        <Text style={styles.name}>{item.author}</Text>
-                        <Text style={styles.place}>{item.place}</Text>
+    render() {
+        return (
+            <View style={styles.feedItem}>
+
+                {/* //TODO: Header */}
+                <View style={styles.feedItemHeader}>
+
+                    <View style={styles.userInfoAvatar}>
+                        <Image style={styles.avatar} source={avatar} />
+
+                        <View style={styles.userInfo}>
+                            <Text style={styles.name}>{this.props.item.author}</Text>
+                            <Text style={styles.place}>{this.props.item.place}</Text>
+                        </View>
+
                     </View>
+
+                    <Icon name="more-horiz" size={30} color={colors.black} />
+                </View>
+
+                <TouchableOpacity onPress={() => {
+                    this.setModalVisible(!this.state.modalVisible, `http://10.0.0.101:3333/files/${this.props.item.image}`);
+                }}>
+
+                    {/* //TODO: Foto */}
+                    <Image style={styles.feedImage} source={{ uri: `http://10.0.0.101:3333/files/${this.props.item.image}` }} />
+                </TouchableOpacity>
+
+            
+
+                {/* //TODO: Footer */}
+                <View style={styles.feedItemFooter}>
+
+                    {/* //TODO: Acoes */}
+                    <View style={styles.actions}>
+                        <View style={{ flexDirection: 'row' }} >
+                            <TouchableOpacity style={styles.action} onPress={() => this.props.handleLike(this.props.item._id)}>
+                                <Image source={like} />
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.action} onPress={() => { }}>
+                                <Image source={comment} />
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.action} onPress={() => { }}>
+                                <Image source={send} />
+                            </TouchableOpacity>
+                        </View>
+
+                        <Icon style={{ marginTop: -6 }} name="bookmark-border" size={25} color={colors.black} />
+
+                    </View>
+
+                    {/* //TODO: InfoPost */}
+
+                    <Text style={styles.likes}>{this.props.item.likes} curtidas</Text>
+                    <Text style={styles.description}>{this.props.item.description}</Text>
+                    <Text style={styles.hashtags}>{this.props.item.hashtags} </Text>
 
                 </View>
 
-                <Icon name="more-horiz" size={30} color={colors.black} />
-            </View>
 
-            {/* //TODO: Foto */}
-            <Image style={styles.feedImage} source={{ uri: `http://10.0.0.101:3333/files/${item.image}` }} />
+                <Modal style={styles.modalImage}
+                    animationType="slide"
+                    transparent={false}
+                    visible={this.state.modalVisible}>
+                    <TouchableHighlight style={{ backgroundColor: 'black' }}
+                        onPress={() => {
+                            this.setModalVisible(!this.state.modalVisible);
+                        }}>
+                        <Icon active name="close" size={30} style={{ textAlign: 'right', marginRight: 20, marginTop: 10, color: 'white' }} />
+                    </TouchableHighlight>
+                    <ImageViewer imageUrls={this.state.images} />
+                </Modal>
 
-            {/* //TODO: Footer */}
-            <View style={styles.feedItemFooter}>
 
-                {/* //TODO: Acoes */}
-                <View style={styles.actions}>
-                    <View style ={{flexDirection: 'row'}} >
-                        <TouchableOpacity style={styles.action} onPress={() => handleLike(item._id)}>
-                            <Image source={like} />
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.action} onPress={() => { }}>
-                            <Image source={comment} />
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.action} onPress={() => { }}>
-                            <Image source={send} />
-                        </TouchableOpacity>
-                    </View>
-
-                    <Icon style={{marginTop:-6}} name = "bookmark-border" size={25} color = {colors.black}/>
-
-                </View>
-
-                {/* //TODO: InfoPost */}
-
-                <Text style={styles.likes}>{item.likes} curtidas</Text>
-                <Text style={styles.description}>{item.description}</Text>
-                <Text style={styles.hashtags}>{item.hashtags} </Text>
 
             </View>
 
-
-        </View>
-
-    );
+        );
+    }
 }
 
 const styles = StyleSheet.create({
@@ -139,5 +189,23 @@ const styles = StyleSheet.create({
     hashtags: {
         color: '#7159c1',
         paddingBottom: 10
-    }
+    },
+
+    header: {
+        backgroundColor: '#000000',
+        color: '#ffffff',
+        textAlign: 'center'
+    },
+    headerTitle: {
+        marginTop: 15,
+        color: '#ffffff'
+    },
+    modalImage: {
+        bottom: 0,
+        marginBottom: 0,
+        paddingBottom: 0,
+        backgroundColor: '#000000',
+    },
+
 })
+
